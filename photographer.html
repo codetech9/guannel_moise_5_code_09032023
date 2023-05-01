@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Fisheye - photographe </title>
+  </head>
+  <body>
+    <header>
+      <img src="assets/images/logo.png" class="logo" />
+    </header>
+    <main id="main">
+      <div class="photograph-header">
+        <button class="contact_button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
+      </div>
+      <form id="sortForm"></form>
+      <div class="media_section"></div>
+    </main>
+    <div id="contact_modal">
+			<div class="modal" id="validated">
+				<header>
+          <h2 class="contact">Contactez-moi</h2>
+          <img src="assets/icons/close.svg" onclick="closeModal()"  aria-label="Fermer la fenêtre "/>
+        </header>
+				<form id="contactForm">
+					<div id="validated">
+            <!--Prénom-->
+						<label for="first">Prénom </label>
+						<input type="text" id="first" name="first" minlength="2" placeholder="Entrer au moins 2 caractères"/>
+            <br>
+            <span class="id errorFirst"></span>
+            <!--Nom-->
+            <label for="last">Nom</label>
+            <input type="text" id="last" name="last" minlength="2" placeholder="Entrer au moins 2 caractères">
+            <br>
+            <span class="id errorLast"></span>
+            <!--Email-->
+            <label for="email">email</label>
+            <input type="email" name="email" id="email"   class="text-control" placeholder="Entrer votre email">
+            <br>
+            <span class="id errorMail"></span>
+            <!--Message-->
+            <label for="message">Votre message</label>
+            <input type="textarea" name="message" id="message" placeholder="Entrer votre message">
+            <br>
+            <span class="id errorMessage"></span>
+					</div>
+          <button class="contact_button" id="btnSubmit" aria-label="Bouton Envoyer" type="submit">Envoyer</button>
+				</form>
+			</div>
+		</div>
+    <script src="./scripts/pages/photographer.js"></script>
+    <script src="scripts/factories/media.js"></script>
+    <script src="scripts/utils/contactForm.js"></script>
+  </body>
+</html>
