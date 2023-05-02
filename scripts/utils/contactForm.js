@@ -9,6 +9,7 @@ function closeModal() {
 }
 
 ////////////////////---Contact-Form--/////////////////////
+const contactForm = document.getElementById("contactForm");
 const first = document.getElementById("first");
 const last = document.getElementById("last");
 const email = document.getElementById("email");
@@ -104,6 +105,44 @@ form.onsubmit = (event) =>{
    }
    console.log("error check");
 };
+
+
+//validate
+function validate (){
+  // input values
+  const first = document.getElementById('first').value;
+  const last = document.getElementById('last').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById("message").value;
+
+  // Errors Validations
+  let hasError = false;
+  console.log("etat: " + hasError);
+
+  if(!isFirstNameValid(first)){
+    hasError = true;
+    console.log("etat-2: " + hasError);
+  }
+
+  if(!isLastNameValid(last)){
+    hasError = true;
+    console.log("etat-3: " + hasError);
+  }
+
+  if(!isEmailValid(email)){
+    hasError = true;
+    console.log("etat-4: " + hasError);
+  }
+
+  if(!isMessageValid(message)){
+    hasError = true;
+    console.log("etat-5:" + hasError);
+  }
+
+  console.log("etat-10: " + hasError);
+
+  return !hasError;
+}
 
 // Clear form
 function resetForm() {

@@ -36,7 +36,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 35px;
-    margin: auto;
+    margin: 0 auto;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .modal header {
