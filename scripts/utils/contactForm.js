@@ -75,20 +75,20 @@ function isEmailValid(email){
 }
 
 // function  message
-function isMessageValid(message) {
-  if(!regMessage.test(message)){
-      console.log(message);
-      errorMessage.textContent ='Nom invalide';
-      errorMessage.style.color = 'red';
-      errorMessage.style.fontSize = "1rem";
-      return false;
-  }else{
-    console.log(message)
-    errorMessage.textContent='';
-    errorMessage.style.color = 'green';
-    return true;
-  }
-}
+// function isMessageValid(message) {
+//   if(!regMessage.test(message)){
+//       console.log(message);
+//       errorMessage.textContent ='Erreur';
+//       errorMessage.style.color = 'red';
+//       errorMessage.style.fontSize = "1rem";
+//       return false;
+//   }else{
+//     console.log(message)
+//     errorMessage.textContent='';
+//     errorMessage.style.color = 'green';
+//     return true;
+//   }
+// }
 
 const form = document.querySelector('#contactForm');
 const submit = document.getElementById("btnSubmit");
@@ -134,10 +134,10 @@ function validate (){
     console.log("etat-4: " + hasError);
   }
 
-  if(!isMessageValid(message)){
-    hasError = true;
-    console.log("etat-5:" + hasError);
-  }
+  // if(!isMessageValid(message)){
+  //   hasError = true;
+  //   console.log("etat-5:" + hasError);
+  // }
 
   console.log("etat-10: " + hasError);
 
