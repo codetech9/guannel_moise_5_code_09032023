@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/85946ce982.js" crossorigin="anonymous"></script>
     <title>Fisheye - photographe </title>
   </head>
   <body>
     <header>
-      <img src="assets/images/logo.png" class="logo" />
+      <a href="index.html"><img src="assets/images/logo.png" class="logo"/></a>
     </header>
     <main id="main">
       <div class="photograph-header">
@@ -22,29 +22,29 @@
     <div id="contact_modal">
 			<div class="modal" id="validated">
 				<header>
-          <h2 class="contact">Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()"  aria-label="Fermer la fenêtre "/>
+          <h2 class="contact">Contactez-moi  </h2>
+          <img src="assets/icons/white-close.svg" onclick="closeModal()"  aria-label="Fermer la fenêtre "/>
         </header>
 				<form id="contactForm">
 					<div id="validated">
             <!--Prénom-->
-						<label for="first">Prénom </label>
-						<input type="text" id="first" name="first" minlength="2" placeholder="Entrer au moins 2 caractères"/>
+						<label for="first">Prénom</label>
+						<input type="text" id="first" name="first" minlength="2" placeholder=" Prénom"/>
             <br>
             <span id="errorFirst"></span>
             <!--Nom-->
             <label for="last">Nom</label>
-            <input type="text" id="last" name="last" minlength="2" placeholder="Entrer au moins 2 caractères">
+            <input type="text" id="last" name="last" minlength="2" placeholder=" Nom">
             <br>
             <span id="errorLast"></span>
             <!--Email-->
-            <label for="email">email</label>
-            <input type="email" name="email" id="email"   class="text-control" placeholder="Entrer votre email">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email"   class="text-control" placeholder=" Email">
             <br>
             <span id="errorMail"></span>
             <!--Message-->
             <label for="message">Votre message</label>
-            <input type="textarea" name="message" id="message" placeholder="Entrer votre message">
+            <input type="textarea" name="message" id="message" placeholder=" Votre message">
             <br>
             <span id="errorMessage"></span>
 					</div>
@@ -52,6 +52,16 @@
 				</form>
 			</div>
 		</div>
+     <!-- lightbox -->
+     <div id="lightbox-container">
+      <div id="lightbox-content">
+        <button class="media-precedent" onclick="previous()"><i class="fa-solid fa-chevron-left"></i></button>
+        <img src="" alt="" id="lightBoxImg">
+        <button class="media-suivant" onclick="next()"><i class="fa-solid fa-chevron-right"></i></button>
+        <img src="assets/icons/close.svg" onclick="hideLightBox()"  aria-label="Fermer la fenêtre "/>
+        <h2 id="lightbox-title"></h2>
+      </div>
+    </div>
     <script src="./scripts/pages/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>
     <script src="scripts/utils/contactForm.js"></script>

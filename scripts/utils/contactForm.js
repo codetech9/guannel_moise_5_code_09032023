@@ -6,29 +6,33 @@ function displayModal() {
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
+    // let first = document.getElementById('first').value;
+    // let last = document.getElementById('last').value;
+    // let email = document.getElementById('email').value;
+    // let message = document.getElementById("message").value;
+    first.value = "";
+    last.value = "";
+    email.value = "";
+    message.value = "";
+    errorFirst.textContent = "";
+    errorLast.textContent = "";
+    errorMail.textContent = "";
 }
 
-////////////////////---Contact-Form--/////////////////////
-const contactForm = document.getElementById("contactForm");
-const first = document.getElementById("first");
-const last = document.getElementById("last");
-const email = document.getElementById("email");
-const message = document.getElementById("message");
+
 
 // REGEX
-const regName = /^[A-Za-z]{2}/;
-const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-const regMessage = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+// const regName = /^[A-Za-z]{2}/;
+// const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 // DOM Errors
 const errorFirst = document.getElementById("errorFirst");
 const errorLast = document.getElementById("errorLast");
 const errorMail = document.getElementById("errorMail");
-const errorMessage = document.getElementById("errorMessage");
 
 // function Firstname
-function isFirstNameValid(first) {
-
+function isFirstNameValid(first, regName) {
+  regName = /^[A-Za-z]{2}/;
   if(!regName.test(first)){
       console.log(first);
       errorFirst.textContent ='Prénom invalide.';
@@ -43,7 +47,9 @@ function isFirstNameValid(first) {
 }
 
 // function Lastname
-function isLastNameValid(last) {
+function isLastNameValid(last, regName) {
+  regName = /^[A-Za-z]{2}/;
+  last = document.getElementById("last").value;
   if(!regName.test(last)){
       console.log(last);
       errorLast.textContent ='Nom invalide.';
@@ -59,7 +65,9 @@ function isLastNameValid(last) {
 }
 
 // function Email
-function isEmailValid(email){
+function isEmailValid(email, regEmail){
+  regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  email = document.getElementById("email").value;
   if(regEmail.test(email)){
     console.log("Email valide: " + email);
     errorMail.textContent ='';
@@ -74,24 +82,9 @@ function isEmailValid(email){
   }
 }
 
-// function  message
-// function isMessageValid(message) {
-//   if(!regMessage.test(message)){
-//       console.log(message);
-//       errorMessage.textContent ='Erreur';
-//       errorMessage.style.color = 'red';
-//       errorMessage.style.fontSize = "1rem";
-//       return false;
-//   }else{
-//     console.log(message)
-//     errorMessage.textContent='';
-//     errorMessage.style.color = 'green';
-//     return true;
-//   }
-// }
 
+////////////////////---Contact-Form--/////////////////////
 const form = document.querySelector('#contactForm');
-const submit = document.getElementById("btnSubmit");
 form.onsubmit = (event) =>{
   event.preventDefault();
   if (validate()){
@@ -99,9 +92,7 @@ form.onsubmit = (event) =>{
     const validated = document.getElementById("validated");
     validated.style.textAlign = "center";
     validated.innerHTML = "Merci pour votre message";
-    validated.style.margin = "35% auto";
-    const contents = document.getElementById("contents");
-    contents.appendChild(closeButton);
+    validated.style.margin = "50% auto";
    }
    console.log("error check");
 };
@@ -134,10 +125,6 @@ function validate (){
     console.log("etat-4: " + hasError);
   }
 
-  // if(!isMessageValid(message)){
-  //   hasError = true;
-  //   console.log("etat-5:" + hasError);
-  // }
 
   console.log("etat-10: " + hasError);
 

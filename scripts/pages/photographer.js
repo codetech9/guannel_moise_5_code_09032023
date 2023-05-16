@@ -8,17 +8,20 @@ async function getPhotographer(id) {
   const data = await response.json();
   // Trouve le photographer grace à son id
   const photographer = data.photographers.find(p => p.id == id);
-  console.log("p: " + photographer);
   // retourne le photographer
   return photographer;
 }
 
-
 async function displayPhotographerInfo(photographer) {
     const photographerHeader = document.querySelector(".photograph-header");
+    photographerHeader.style.display = "flex";
+    photographerHeader.style.justifyContent = "space-around";
+    photographerHeader.style.flexWrap = "wrap";
+    photographerHeader.style.flexDirection = "row";
     console.log(photographer);
 
     // Affichage du nom du photographer
+    const photographerInfoCtn = document.createElement("div")
     const h2 = document.createElement("h2");
     h2.style.fontSize = "64px";
     h2.style.fontWeight = "400";
@@ -46,11 +49,15 @@ async function displayPhotographerInfo(photographer) {
     img.style.height = "200px";
     img.style.width = "200px";
 
+
     // Ajout des données à la page photographer.html
-    photographerHeader.prepend(h2);
+    photographerInfoCtn.prepend(h2);
     h2.appendChild(location);
     location.appendChild(line);
-    photographerHeader.appendChild(img);
+    photographerHeader.prepend(photographerInfoCtn);
+    let photographerProfileCtn = document.createElement("div");
+    photographerProfileCtn.appendChild(img)
+    photographerHeader.appendChild(photographerProfileCtn);
 
 
     // Section trier par:
@@ -75,7 +82,6 @@ async function displayPhotographerInfo(photographer) {
     selectList.style.color= "white";
     selectList.style.backgroundColor="#901C1C";
     selectList.style.borderColor="#901C1C";
-
 
     //Create and append the options
     for (var i = 0; i < array.length; i++) {
@@ -103,6 +109,8 @@ async function getMediaList(id) {
 }
 
 
+
+
 async function displayMediaList(mediaList, photographer) {
 
   //appendChild to main
@@ -113,9 +121,11 @@ async function displayMediaList(mediaList, photographer) {
   article.style.maxWidth = "1300px";
   article.style.flexDirection = "row";
   article.style.display = "flex";
+  article.style.flexWrap = "wrap";
   article.style.justifyContent = "space-between";
   article.style.flexWrap = "wrap";
   article.style.margin = "0 auto";
+  article.style.padding = "0";
 
   // On itère sur chacune des images
   mediaList.forEach(media => {
@@ -123,15 +133,21 @@ async function displayMediaList(mediaList, photographer) {
     // répertoire d'images
     let image = `assets/sample/${photographer.name.split(' ')[0]}/${media.image}`;
     const imgDiv = document.createElement("div");
-    imgDiv.style.border = "10px solid white";
     imgDiv.style.margin = '25px';
+    imgDiv.addEventListener("click", () => {
+      showLightBox()
+      changeLightBoxImg(image, media.title)
+      next(image[i])
+    })
 
-    // imgDiv.style.margin = "20px";
+
+    // Affichage d'une image
     const img = document.createElement("img");
     img.setAttribute("src", image);
     img.style.width = "350px";
     img.style.height = "400px";
     img.style.borderRadius = "5px";
+
 
     // title
     let title = document.createElement("p");
@@ -143,19 +159,27 @@ async function displayMediaList(mediaList, photographer) {
 
     // Div de description
     let imgDescription = document.createElement("div");
-    
+    imgDescription.style.color = "#901C1C";
+
     // hearticone
     let heart = document.createElement("p");
-    heart = `<i class="fa-solid fa-heart"></i>`;
+    heart.innerHTML = `<i class="fa-solid fa-heart"></i>`;
 
-    // heartctn
-    let heartctn = document.createElement("p");
-    heartctn.textContent =  media.likes;
+
+    // heartCtn
+    let heartCtn = document.createElement("p");
+    heartCtn.innerHTML = media.likes  +  "   " +  `<i class="fa-solid fa-heart"></i>`;
     imgDescription.appendChild(title);
-    imgDescription.appendChild(heartctn);
+    imgDescription.appendChild(heartCtn);
+    imgDescription.appendChild(heartCtn);
+    heartCtn.style.display = "flex";
+    heartCtn.style.alignItems = "start";
+    heartCtn.style.justifyContent = "start";
     imgDescription.style.display = "flex";
     imgDescription.style.justifyContent = "space-between";
     imgDescription.style.flexWrap = "wrap";
+
+
 
     // Ajout des div au contenair article
     article.appendChild(imgDiv);
@@ -166,24 +190,81 @@ async function displayMediaList(mediaList, photographer) {
     // Ajout de la description
     imgDiv.appendChild(imgDescription);
 
+    imgDiv.classList.add("card-container");
+
+
     // AppendChild main
     main.appendChild(article);
   });
+
+
+   // Block likes et tjm
+  const priceLabelCtn = document.createElement("div");
+  priceLabelCtn.style.backgroundColor = "#DB8876";
+  priceLabelCtn.style.position = "absolue";
+  priceLabelCtn.style.right = "0";
+  priceLabelCtn.style.bottom = "0";
+  priceLabelCtn.style.maxWidth = "376px";
+  priceLabelCtn.style.maxHeight = "89px";
+  priceLabelCtn.style.display = "flex";
+  priceLabelCtn.style.justifyContent = "space-around";
+  priceLabelCtn.style.flexWrap = "nowrap";
+
+
+   // Likes numbers
+  const likeNumbers = document.createElement("p");
+  likeNumbers.textContent = "297 081";
+
+  // tjm
+  const tjm = document.createElement("p");
+  tjm.textContent = `${photographer.price}€ /jour`;
+  priceLabelCtn.appendChild(likeNumbers);
+  priceLabelCtn.appendChild(tjm);
+  main.appendChild(priceLabelCtn);
+}
+
+//
+function changeLightBoxImg(image, title){
+  let lightBoxImg = document.querySelector('#lightBoxImg');
+  lightBoxImg.setAttribute("src", image);
+  let lightBoxTitle = document.querySelector("#lightbox-title")
+  lightBoxTitle.textContent = title;
+}
+
+function next(image){
+  let i = 0
+  i++;
+  let lightBoxImg = document.querySelector('#lightBoxImg');
+  lightBoxImg.setAttribute("src", image);
 }
 
 
+function showLightBox(){
+  document.querySelector("#lightbox-container").style.display = "block";
+}
+
+function hideLightBox(){
+  document.querySelector("#lightbox-container").style.display = "none";
+}
+
+// on récupère l'id du photographe
+function getPhotographerId() {
+  const parameters = new URLSearchParams(window.location.search);
+  return parseInt(parameters.get("id"));
+}
+
 
 async function init() {
+  const photographerId = getPhotographerId()
 
-  // On effectue une recherche  de l'id du  photographe
-    const parameters = new URLSearchParams(window.location.search);
-    const photographerId = parseInt(parameters.get("id"));
+    // On récupère les informations grace à l'id du photographe
     const photographer = await getPhotographer(photographerId);
     const mediaList = await getMediaList(photographerId);
 
     // On affiche les données.
     displayPhotographerInfo(photographer);
     displayMediaList(mediaList, photographer);
+
 };
 
 init();
