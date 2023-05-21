@@ -84,3 +84,19 @@ form input {
     border: none;
     border-radius: 5px;
 }
+
+.profil-pic {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}
+
+.title-design {
+  font-size: 64px;
+  font-weight: 400;
+  color: #D3573C;
+}
+
+.font-sizing {
+  font-size: 13px;
+}

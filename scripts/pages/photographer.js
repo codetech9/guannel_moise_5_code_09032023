@@ -14,18 +14,10 @@ async function getPhotographer(id) {
 
 async function displayPhotographerInfo(photographer) {
     const photographerHeader = document.querySelector(".photograph-header");
-    photographerHeader.style.display = "flex";
-    photographerHeader.style.justifyContent = "space-around";
-    photographerHeader.style.flexWrap = "wrap";
-    photographerHeader.style.flexDirection = "row";
-    console.log(photographer);
-
     // Affichage du nom du photographer
     const photographerInfoCtn = document.createElement("div")
     const h2 = document.createElement("h2");
-    h2.style.fontSize = "64px";
-    h2.style.fontWeight = "400";
-    h2.style.color = "#D3573C";
+    h2.classList.add("title-design");
     let nom = photographer.name;
     h2.textContent = nom;
 
@@ -33,21 +25,19 @@ async function displayPhotographerInfo(photographer) {
     const location = document.createElement('p');
     location.textContent = `${photographer.city}`+ ', ' + `${photographer.country}`;
     location.style.color = "#901C1C";
-    location.style.fontSize = "13px";
+    location.classList.add('font-sizing');
 
     // tagline
     const line = document.createElement('p');
     line.textContent = photographer.tagline;
     line.style.color= "#525252";
-    line.style.fontSize = "13px";
+    line.style.classList.add('font-sizing');
 
     // Photo de profil du photographer
     const picture = `assets/photographers/${photographer.portrait}`;
     const img = document.createElement( 'img' );
     img.setAttribute("src", picture);
-    img.style.borderRadius = "50%";
-    img.style.height = "200px";
-    img.style.width = "200px";
+    img.classList.add("profil-pic");
 
 
     // Ajout des données à la page photographer.html
@@ -63,10 +53,7 @@ async function displayPhotographerInfo(photographer) {
     // Section trier par:
     const main = document.getElementById("main");
     const sortForm = document.getElementById("sortForm");
-    sortForm.style.maxWidth = "1440px";
-    sortForm.style.flexDirection = "row";
-    sortForm.style.margin = "0 100px";
-    sortForm.style.marginTop = "2rem";
+    sortForm.classList.add("sortForm");
     const label = document.createElement("label");
     label.style.fontSize = "18px";
     label.style.marginRight = "10px";
@@ -132,21 +119,34 @@ async function displayMediaList(mediaList, photographer) {
 
     // répertoire d'images
     let image = `assets/sample/${photographer.name.split(' ')[0]}/${media.image}`;
+    let video = `assets/sample/${photographer.name.split(' ')[0]}/${media.video}`;
+    console.log(video);
     const imgDiv = document.createElement("div");
     imgDiv.style.margin = '25px';
     imgDiv.addEventListener("click", () => {
-      showLightBox()
-      changeLightBoxImg(image, media.title)
-      next(image[i])
+      showLightBox();
+      changeLightBoxImg(image, video, media.title);
     })
 
-
-    // Affichage d'une image
     const img = document.createElement("img");
-    img.setAttribute("src", image);
-    img.style.width = "350px";
-    img.style.height = "400px";
-    img.style.borderRadius = "5px";
+    if(media.image == undefined) {
+      // Affichage d'une video
+      const PhotograherVideo = document.createElement("video");
+      PhotograherVideo.setAttribute("src", video);
+      PhotograherVideo.style.width = "350px";
+      PhotograherVideo.style.height = "400px";
+      PhotograherVideo.autoplay = true;
+      // Ajout de l'img à la div
+      imgDiv.appendChild(PhotograherVideo);
+    } else {
+      // Affichage d'une image
+      img.setAttribute("src", image);
+      img.style.width = "350px";
+      img.style.height = "400px";
+      img.style.borderRadius = "5px";
+      // Ajout de l'img à la div
+      imgDiv.appendChild(img);
+    }
 
 
     // title
@@ -184,8 +184,7 @@ async function displayMediaList(mediaList, photographer) {
     // Ajout des div au contenair article
     article.appendChild(imgDiv);
 
-    // Ajout de l'img à la div
-    imgDiv.appendChild(img);
+
 
     // Ajout de la description
     imgDiv.appendChild(imgDescription);
@@ -224,19 +223,28 @@ async function displayMediaList(mediaList, photographer) {
 }
 
 //
-function changeLightBoxImg(image, title){
+
+
+function changeLightBoxImg(image, video, title, photographer){
+
   let lightBoxImg = document.querySelector('#lightBoxImg');
-  lightBoxImg.setAttribute("src", image);
+  // si lighBoxImg ne renvoi pas undefined alors affiche l'image sinon affiche une vidéo
+  if(image !== undefined) {
+    lightBoxImg.setAttribute("src", image);
+  }else {
+    let lighBoxVideo = document.querySelector("#lightBoxVideo")
+    video = `assets/sample/${photographer.name.split(' ')[0]}/${media.video}`;
+    console.log(video);
+    lightBoxVideo.setAttribute("src", video);
+    console.log(lighBoxVideo);
+  }
+
+  // Affichage du titre de l'image ou de la vidéo actuelle
   let lightBoxTitle = document.querySelector("#lightbox-title")
   lightBoxTitle.textContent = title;
 }
 
-function next(image){
-  let i = 0
-  i++;
-  let lightBoxImg = document.querySelector('#lightBoxImg');
-  lightBoxImg.setAttribute("src", image);
-}
+
 
 
 function showLightBox(){
