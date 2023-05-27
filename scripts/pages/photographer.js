@@ -31,7 +31,7 @@ async function displayPhotographerInfo(photographer) {
     const line = document.createElement('p');
     line.textContent = photographer.tagline;
     line.style.color= "#525252";
-    line.style.classList.add('font-sizing');
+    line.style.fontSize = "13px";
 
     // Photo de profil du photographer
     const picture = `assets/photographers/${photographer.portrait}`;
@@ -105,41 +105,37 @@ async function displayMediaList(mediaList, photographer) {
 
   // Article
   const article = document.createElement("article");
-  article.style.maxWidth = "1300px";
-  article.style.flexDirection = "row";
-  article.style.display = "flex";
-  article.style.flexWrap = "wrap";
-  article.style.justifyContent = "space-between";
-  article.style.flexWrap = "wrap";
-  article.style.margin = "0 auto";
-  article.style.padding = "0";
+  article.classList.add("articles");
 
   // On itère sur chacune des images
-  mediaList.forEach(media => {
+  mediaList.forEach((media, index) => {
 
     // répertoire d'images
-    let image = `assets/sample/${photographer.name.split(' ')[0]}/${media.image}`;
-    let video = `assets/sample/${photographer.name.split(' ')[0]}/${media.video}`;
-    console.log(video);
+
     const imgDiv = document.createElement("div");
     imgDiv.style.margin = '25px';
     imgDiv.addEventListener("click", () => {
       showLightBox();
-      changeLightBoxImg(image, video, media.title);
+      changeLightBoxImg(media, photographer.name);
+      previous(mediaList, index);
+      next(mediaList, index)
     })
 
     const img = document.createElement("img");
     if(media.image == undefined) {
       // Affichage d'une video
-      const PhotograherVideo = document.createElement("video");
-      PhotograherVideo.setAttribute("src", video);
-      PhotograherVideo.style.width = "350px";
-      PhotograherVideo.style.height = "400px";
-      PhotograherVideo.autoplay = true;
+      const PhotographerVideo = document.createElement("video");
+      let video = `assets/sample/${photographer.name.split(' ')[0]}/${media.video}`;
+      PhotographerVideo.setAttribute("src", video);
+      PhotographerVideo.style.width = "350px";
+      PhotographerVideo.style.height = "400px";
+      PhotographerVideo.style.objectFit = "fill";
+      PhotographerVideo.autoplay = true;
       // Ajout de l'img à la div
-      imgDiv.appendChild(PhotograherVideo);
+      imgDiv.appendChild(PhotographerVideo);
     } else {
       // Affichage d'une image
+      let image = `assets/sample/${photographer.name.split(' ')[0]}/${media.image}`;
       img.setAttribute("src", image);
       img.style.width = "350px";
       img.style.height = "400px";
@@ -168,7 +164,7 @@ async function displayMediaList(mediaList, photographer) {
 
     // heartCtn
     let heartCtn = document.createElement("p");
-    heartCtn.innerHTML = media.likes  +  "   " +  `<i class="fa-solid fa-heart"></i>`;
+    heartCtn.innerHTML = media.likes  +  "    " +`  <i class="fa-solid fa-heart"></i>`;
     imgDescription.appendChild(title);
     imgDescription.appendChild(heartCtn);
     imgDescription.appendChild(heartCtn);
@@ -178,74 +174,69 @@ async function displayMediaList(mediaList, photographer) {
     imgDescription.style.display = "flex";
     imgDescription.style.justifyContent = "space-between";
     imgDescription.style.flexWrap = "wrap";
-
-
+    imgDescription.style.maxWidth = "350px";
 
     // Ajout des div au contenair article
     article.appendChild(imgDiv);
-
-
 
     // Ajout de la description
     imgDiv.appendChild(imgDescription);
 
     imgDiv.classList.add("card-container");
 
-
     // AppendChild main
     main.appendChild(article);
+
+
   });
+  //  // Block likes et tjm
+  //  const priceLabelCtn = document.createElement("div");
+  //  priceLabelCtn.style.backgroundColor = "#DB8876";
+  //  priceLabelCtn.style.position = "absolute";
+  //  priceLabelCtn.style.right = "0";
+  //  priceLabelCtn.style.bottom = "0";
+  //  priceLabelCtn.style.maxWidth = "376px";
+  //  priceLabelCtn.style.maxHeight = "89px";
+  //  priceLabelCtn.style.display = "flex";
+  //  priceLabelCtn.style.justifyContent = "space-around";
+  //  priceLabelCtn.style.flexWrap = "nowrap";
+
+  //  // Likes numbers
+  //  const likeNumbers = document.createElement("p");
+  //  likeNumbers.innerHTML = media.likes + ` <i class="fa-solid fa-heart"></i>`;
 
 
-   // Block likes et tjm
-  const priceLabelCtn = document.createElement("div");
-  priceLabelCtn.style.backgroundColor = "#DB8876";
-  priceLabelCtn.style.position = "absolue";
-  priceLabelCtn.style.right = "0";
-  priceLabelCtn.style.bottom = "0";
-  priceLabelCtn.style.maxWidth = "376px";
-  priceLabelCtn.style.maxHeight = "89px";
-  priceLabelCtn.style.display = "flex";
-  priceLabelCtn.style.justifyContent = "space-around";
-  priceLabelCtn.style.flexWrap = "nowrap";
+  //  // tjm
+  //  const tjm = document.createElement("p");
+  //  tjm.textContent = `${photographer.price}€ /jour`;
+  //  priceLabelCtn.appendChild(likeNumbers);
+  //  priceLabelCtn.appendChild(tjm);
+  //  main.appendChild(priceLabelCtn);
 
-
-   // Likes numbers
-  const likeNumbers = document.createElement("p");
-  likeNumbers.textContent = "297 081";
-
-  // tjm
-  const tjm = document.createElement("p");
-  tjm.textContent = `${photographer.price}€ /jour`;
-  priceLabelCtn.appendChild(likeNumbers);
-  priceLabelCtn.appendChild(tjm);
-  main.appendChild(priceLabelCtn);
 }
 
 //
 
-
-function changeLightBoxImg(image, video, title, photographer){
-
+function changeLightBoxImg(media, photographerName){
+  // Éléments du DOM
+  let lighBoxVideo = document.querySelector("#lightBoxVideo")
   let lightBoxImg = document.querySelector('#lightBoxImg');
-  // si lighBoxImg ne renvoi pas undefined alors affiche l'image sinon affiche une vidéo
-  if(image !== undefined) {
-    lightBoxImg.setAttribute("src", image);
-  }else {
-    let lighBoxVideo = document.querySelector("#lightBoxVideo")
-    video = `assets/sample/${photographer.name.split(' ')[0]}/${media.video}`;
-    console.log(video);
-    lightBoxVideo.setAttribute("src", video);
-    console.log(lighBoxVideo);
-  }
-
-  // Affichage du titre de l'image ou de la vidéo actuelle
   let lightBoxTitle = document.querySelector("#lightbox-title")
-  lightBoxTitle.textContent = title;
+
+  // si lighBoxImg ne renvoi pas undefined alors affiche l'image sinon affiche une vidéo
+  if(media.image !== undefined) {
+    image = `assets/sample/${photographerName.split(' ')[0]}/${media.image}`;
+    lightBoxImg.setAttribute("src", image );
+    lighBoxVideo.style.display = "none";
+  }else {
+    video = `assets/sample/${photographerName.split(' ')[0]}/${media.video}`;
+    lightBoxVideo.setAttribute("src", video);
+    lightBoxImg.style.display = "none";
+  }
+  // Affichage du titre de l'image ou de la vidéo actuelle
+  lightBoxTitle.textContent = media.title;
+  lightBoxTitle.style.color = "#901C1C";
 }
-
-
-
 
 function showLightBox(){
   document.querySelector("#lightbox-container").style.display = "block";
@@ -255,12 +246,48 @@ function hideLightBox(){
   document.querySelector("#lightbox-container").style.display = "none";
 }
 
+// récupérer le tableau d'image, index de l'image actuelle, tabImg[index], tabImg[index +1]
+
+function previous(mediaList, index){
+  let previousMedia = document.getElementById("previous-media");
+  lightBoxImg = document.querySelector("#lightBoxImg");
+  index = 0
+  previousMedia.addEventListener("click", function(){
+    index--;
+    if(index < 0){
+      index = mediaList.length -1;
+      lightBoxImg.setAttribute( "src", mediaList[index]);
+      console.log(mediaList[index]);
+    }else{
+        lightBoxImg.setAttribute( "src", index);
+    }
+  })
+}
+
+function next(mediaList, index){
+    index = 0;
+    let nextMedia = document.getElementById("next-media");
+    lightBoxImg = document.querySelector("#lightBoxImg");
+    nextMedia.addEventListener("click", function(){
+      index++;
+    if(index >= mediaList.length){
+        index = 0;
+        lightBoxImg.setAttribute( "src", index.video);
+    }else{
+        lightBoxImg.setAttribute( "src", mediaList[index]);
+    }
+    })
+  }
+
+
+
+
+
 // on récupère l'id du photographe
 function getPhotographerId() {
   const parameters = new URLSearchParams(window.location.search);
   return parseInt(parameters.get("id"));
 }
-
 
 async function init() {
   const photographerId = getPhotographerId()
