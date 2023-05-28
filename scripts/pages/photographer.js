@@ -117,8 +117,8 @@ async function displayMediaList(mediaList, photographer) {
     imgDiv.addEventListener("click", () => {
       showLightBox();
       changeLightBoxImg(media, photographer.name);
-      previous(mediaList, index);
-      next(mediaList, index)
+      previous(mediaList, index, photographer.name);
+      next(mediaList, index, photographer.name)
     })
 
     const img = document.createElement("img");
@@ -248,33 +248,35 @@ function hideLightBox(){
 
 // récupérer le tableau d'image, index de l'image actuelle, tabImg[index], tabImg[index +1]
 
-function previous(mediaList, index){
+function previous(mediaList, index, photographerName){
   let previousMedia = document.getElementById("previous-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
-  index = 0
+
   previousMedia.addEventListener("click", function(){
+    index = 0
     index--;
-    if(index < 0){
-      index = mediaList.length -1;
-      lightBoxImg.setAttribute( "src", mediaList[index]);
-      console.log(mediaList[index]);
-    }else{
-        lightBoxImg.setAttribute( "src", index);
-    }
+    lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+    //  if(index < 0){
+    //   index = mediaList.length -1;
+    //   console.log(lightBoxImg);
+    //   // if(mediaList[index].hasOwnProperty("image"))
+    // }else{
+    //     lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+    // }
   })
 }
 
-function next(mediaList, index){
+function next(mediaList, index, photographerName){
+  let nextMedia = document.getElementById("next-media");
+  lightBoxImg = document.querySelector("#lightBoxImg");
+  nextMedia.addEventListener("click", function(){
     index = 0;
-    let nextMedia = document.getElementById("next-media");
-    lightBoxImg = document.querySelector("#lightBoxImg");
-    nextMedia.addEventListener("click", function(){
-      index++;
+    index++;
     if(index >= mediaList.length){
         index = 0;
-        lightBoxImg.setAttribute( "src", index.video);
+        lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
     }else{
-        lightBoxImg.setAttribute( "src", mediaList[index]);
+        lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
     }
     })
   }
