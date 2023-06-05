@@ -7,6 +7,7 @@ function photographerFactory(data) {
         let photographerLink = document.createElement("a");
         photographerLink.setAttribute("href", "photographer.html?id=" + id);
         photographerLink.style.textDecoration = "none";
+        photographerLink.style.color = "#000000";
         photographerLink.style.visited = "inherit";
         const article = document.createElement( 'article' );
 
@@ -26,6 +27,7 @@ function photographerFactory(data) {
         location.style.fontSize = "13px";
         location.style.marginTop = "0";
         location.style.marginBottom ="0";
+        location.style.color = "#901C1C";
 
         // tagline
         const line = document.createElement('p');
@@ -40,6 +42,7 @@ function photographerFactory(data) {
         priceperday.textContent = price+"€/jour";
         priceperday.style.fontSize = "12px";
         priceperday.style.marginTop = "0px";
+        priceperday.style.color = "#757575";
 
         // adding all the datas to the article container
         article.appendChild(img);

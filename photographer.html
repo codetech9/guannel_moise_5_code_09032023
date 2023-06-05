@@ -9,9 +9,11 @@
     <title>Fisheye - photographe </title>
   </head>
   <body>
+    <!--header-->
     <header>
       <a href="index.html"><img src="assets/images/logo.png" class="logo"/></a>
     </header>
+    <!--main-->
     <main id="main">
       <div class="photograph-header">
         <button class="contact_button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
@@ -19,6 +21,7 @@
       <form id="sortForm"></form>
       <div class="media_section"></div>
     </main>
+    <!--contact -->
     <div id="contact_modal">
 			<div class="modal" id="validated">
 				<header>
@@ -52,8 +55,8 @@
 				</form>
 			</div>
 		</div>
-     <!-- lightbox -->
-     <div id="lightbox-container">
+    <!-- lightbox -->
+    <div id="lightbox-container">
       <div id="lightbox-content">
         <div id="lightbox">
           <button id="previous-media"><i class="fa-solid fa-chevron-left"></i></button>
@@ -67,6 +70,10 @@
         </div>
         <img src="assets/icons/close.svg" onclick="hideLightBox()"  aria-label="Fermer la fenêtre " id="cross"/>
       </div>
+    </div>
+    <div id="likesPriceContainer">
+      <p id="likeNumber"><span id="likeTotal"></span><i class="fa-solid fa-heart"></i></p>
+      <p id="pricePerDay">€/jour</p>
     </div>
     <script src="./scripts/pages/photographer.js"></script>
     <script src="scripts/factories/media.js"></script>

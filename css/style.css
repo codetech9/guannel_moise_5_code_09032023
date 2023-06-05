@@ -69,8 +69,10 @@ h1 {
   color: #901C1C;
 }
 
-
-
+/*card container*/
+.card-container {
+  margin: 25px auto;
+}
 
 /* heart */
 .fa-solid, .fas {
@@ -172,4 +174,21 @@ h1 {
   flex-direction: row;
   margin: 0 100px;
   margin-top:  2rem;
+}
+
+
+/* Likes & Price Container  */
+#likesPriceContainer {
+  background-color: #DB8876;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  max-width: 300px;
+  position: fixed;
+  bottom: -10px;
+  right: 15px;
+  justify-content: space-around;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0;
 }
