@@ -18,8 +18,21 @@
       <div class="photograph-header">
         <button class="contact_button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
       </div>
-      <form id="sortForm"></form>
-      <div class="media_section"></div>
+      <div id="sortForm">
+        <p>Trier par</p>
+        <div id="dropDown">
+          <a href="#"  id="form-select">
+            <span>Popularité</span><i class="fa-solid fa-angle-up"></i>
+            <i class="fa-solid fa-angle-down angle-down" style="color: #ffffff;"></i>
+          </a>
+          <div id="selects">
+            <a href="#" class="selected underlines"  id= "popularite">Popularité</a>
+            <a href="#" class="selected underlines" id ="date">Date</a>
+            <a href="#" class="selected" id="titre">Titre</a>
+          </div>
+        </div>
+      </div>
+      <div id="media-section" class="articles"></div>
     </main>
     <!--contact -->
     <div id="contact_modal">

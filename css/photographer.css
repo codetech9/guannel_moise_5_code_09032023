@@ -1,3 +1,8 @@
+.contact_button:hover {
+  background-color: #DB8876;
+  color: #312E2E;
+}
+
 #contact_modal {
     display: none;
 }
@@ -5,13 +10,14 @@
 .photograph-header {
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 100px;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     align-content: space-around;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 1240px;
 }
 
 .contact_button {
