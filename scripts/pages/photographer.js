@@ -19,10 +19,10 @@ async function displayPhotographerInfo(photographer) {
     const photographerHeader = document.querySelector(".photograph-header");
     // Affichage du nom du photographer
     const photographerInfoCtn = document.createElement("div")
-    const h2 = document.createElement("h2");
-    h2.classList.add("title-design");
+    const h1= document.createElement("h1");
+    h1.classList.add("title-design");
     let nom = photographer.name;
-    h2.textContent = nom;
+    h1.textContent = nom;
 
     // location
     const location = document.createElement('p');
@@ -40,6 +40,7 @@ async function displayPhotographerInfo(photographer) {
     const picture = `assets/photographers/${photographer.portrait}`;
     const img = document.createElement( 'img' );
     img.setAttribute("src", picture);
+    img.setAttribute("alt", photographer.portrait);
     img.classList.add("profil-pic");
 
 
@@ -48,8 +49,8 @@ async function displayPhotographerInfo(photographer) {
 
 
     // Ajout des données à la page photographer.html
-    photographerInfoCtn.prepend(h2);
-    h2.appendChild(location);
+    photographerInfoCtn.prepend(h1);
+    h1.appendChild(location);
     location.appendChild(line);
     photographerHeader.prepend(photographerInfoCtn);
     let photographerProfileCtn = document.createElement("div");
@@ -89,6 +90,7 @@ async function displayMediaList(mediaList, photographer) {
       // Affichage d'une video
       let video = `assets/sample/${photographer.name.split(' ')[0]}/${media.video}`;
       photographerVideo.setAttribute("src", video);
+      // photographer.setAttribute("alt", video);
       photographerVideo.style.maxWidth = "400px";
       photographerVideo.style.maxHeight = "450px";
       photographerVideo.style.height = "100%";
@@ -97,7 +99,6 @@ async function displayMediaList(mediaList, photographer) {
       photographerVideo.autoplay = true;
       photographerVideo.loop = true;
       photographerVideo.style.borderRadius = "5px";
-      img.style.display = "none";
       photographerVideo.addEventListener("click", () => {
         // index actuel
         index = i
@@ -109,13 +110,14 @@ async function displayMediaList(mediaList, photographer) {
       // Affichage d'une image
       let image = `assets/sample/${photographer.name.split(' ')[0]}/${media.image}`;
       img.setAttribute("src", image);
+      img.setAttribute("alt", media.image);
       img.style.maxWidth = "400px";
       img.style.maxHeight = "450px";
       img.style.width = "100%";
       img.style.height = "100%";
       img.style.borderRadius = "5px";
       // img.style.objectFit = "cover";
-      document.querySelector("#lightBoxVideo").style.display = "none";
+      // document.querySelector("#lightBoxVideo").style.display = "none";
       img.addEventListener("click", () => {
         // index actuel
         index = i
@@ -189,13 +191,30 @@ function setupLighboxPreviousButton(mediaList, photographerName){
 
   let previousMedia = document.getElementById("previous-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
-
+  lightBoxVideo = document.querySelector("#lightBoxVideo");
   previousMedia.addEventListener("click", function(){
     index--;
     if (index < 0) {
       index = mediaList.length -1;
     }
-    lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+    if(mediaList[index].image) {
+      lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+      lightBoxImg.style.display = "flex";
+      lightBoxVideo.style.display = "none";
+    }else {
+      lightBoxVideo.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].video}`);
+      lightBoxVideo.style.display = "flex";
+      lightBoxVideo.style.maxWidth = "400px";
+      lightBoxVideo.style.maxHeight = "450px";
+      lightBoxVideo.style.height = "100%";
+      lightBoxVideo.style.width = "100%";
+      lightBoxVideo.style.width = "100%";
+      lightBoxVideo.style.objectFit = "fill";
+      lightBoxVideo.autoplay = true;
+      lightBoxVideo.loop = true;
+      lightBoxVideo.style.borderRadius = "5px";
+      lightBoxImg.style.display = "none";
+    }
     lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title
   })
 }
@@ -203,12 +222,30 @@ function setupLighboxPreviousButton(mediaList, photographerName){
 function setupLighboxNextButton(mediaList, photographerName){
   let nextMedia = document.getElementById("next-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
+  lightBoxVideo = document.querySelector("#lightBoxVideo");
   nextMedia.addEventListener("click", function(){
     index++;
     if( index >= mediaList.length ){
       index = 0;
     }
-    lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+    if(mediaList[index].image) {
+      lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+      lightBoxImg.style.display = "flex";
+      lightBoxVideo.style.display = "none";
+    }else {
+      lightBoxVideo.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].video}`);
+      lightBoxVideo.style.display = "flex";
+      lightBoxVideo.style.maxWidth = "400px";
+      lightBoxVideo.style.maxHeight = "450px";
+      lightBoxVideo.style.height = "100%";
+      lightBoxVideo.style.width = "100%";
+      lightBoxVideo.style.width = "100%";
+      lightBoxVideo.style.objectFit = "fill";
+      lightBoxVideo.autoplay = true;
+      lightBoxVideo.loop = true;
+      lightBoxVideo.style.borderRadius = "5px";
+      lightBoxImg.style.display = "none";
+    }
     lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title;
   })
 }

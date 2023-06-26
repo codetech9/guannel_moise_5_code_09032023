@@ -12,7 +12,8 @@ function photographerFactory(data) {
         const article = document.createElement( 'article' );
 
         const img = document.createElement( 'img' );
-        img.setAttribute("src", picture)
+        img.setAttribute("src", picture);
+        img.setAttribute("alt", picture);
         img.style.borderRadius = "50%";
 
         // Name

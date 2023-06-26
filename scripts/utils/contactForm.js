@@ -1,11 +1,16 @@
 function displayModal() {
-    const modal = document.getElementById("contact_modal");
+  const modal = document.getElementById("contact_modal");
+  const body = document.querySelector("body");
 	modal.style.display = "block";
+  modal.attr('aria-hidden', 'false');
+  body.style.overflow = "hidden";
 }
 
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
+    modal.attr('aria-hidden', 'true');
+    modal.focus();
     // let first = document.getElementById('first').value;
     // let last = document.getElementById('last').value;
     // let email = document.getElementById('email').value;
@@ -131,6 +136,7 @@ function validate (){
   return !hasError;
 }
 
+
 // Clear form
 function resetForm() {
   // input values
@@ -143,3 +149,22 @@ function resetForm() {
   const message = document.getElementById("message");
   message.value = "";
 }
+
+// Close modal  while ESC key is press
+
+// Get the modal element
+function escClose() {
+  const modal = document.getElementById("contact_modal");
+  // Listen for keydown event on the document
+  document.addEventListener("keydown", function(event) {
+    // Check if the pressed key is the "Esc" key
+    if (event.key === "Escape") {
+      // Close the modal
+      modal.style.display = "none";
+      modal.attr('aria-hidden', 'true');
+      resetForm();
+    }
+  });
+}
+
+escClose();

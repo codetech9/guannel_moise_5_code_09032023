@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
@@ -10,15 +10,15 @@
   </head>
   <body>
     <!--header-->
-    <header>
-      <a href="index.html"><img src="assets/images/logo.png" class="logo"/></a>
+    <header role="navigation">
+      <a href="index.html"><img src="assets/images/logo.png" class="logo" alt="Fisheye logo - Page d’accueil"></a>
     </header>
     <!--main-->
-    <main id="main">
-      <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
+    <main id="main" aria-hidden="false">
+      <div class="photograph-header" role="banner" aria-labelledby="photographer banner">
+        <button class="contact_button" role ="contactbutton" aria-label="contact button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
       </div>
-      <div id="sortForm">
+      <div id="sortForm" role="filter" aria-labell = "selectform" aria-haspopup="true" aria-expanded="false">
         <p>Trier par</p>
         <div id="dropDown">
           <a href="#"  id="form-select">
@@ -32,13 +32,13 @@
           </div>
         </div>
       </div>
-      <div id="media-section" class="articles"></div>
+      <div id="media-section" class="articles" role="media contents" aria-label="mediacontents"></div>
     </main>
     <!--contact -->
-    <div id="contact_modal">
+    <div id="contact_modal" role="dialog" aria-labelledby="contact-modal" aria-describedby="contactezMoi">
 			<div class="modal" id="validated">
 				<header>
-          <h2 class="contact">Contactez-moi</h2>
+          <h2 class="contact" id="contactezMoi">Contactez-moi</h2>
           <img src="assets/icons/white-close.svg" onclick="closeModal()"  aria-label="Fermer la fenêtre "/>
         </header>
 				<form id="contactForm">
@@ -69,22 +69,22 @@
 			</div>
 		</div>
     <!-- lightbox -->
-    <div id="lightbox-container">
+    <div id="lightbox-container" role="carousel de media" aria-label="carouseldemedia">
       <div id="lightbox-content">
         <div id="lightbox">
-          <button id="previous-media"><i class="fa-solid fa-chevron-left"></i></button>
+          <p id="previous-media"><i class="fa-solid fa-chevron-left" aria-hidden="true" title="voir media précédent"></i></p>
           <div id="media-content">
-            <img src="" alt="" id="lightBoxImg">
-            <video autoplay loop src="" alt="" id="lightBoxVideo"></video>
+            <img src="" alt="" id="lightBoxImg" role="img">
+            <video autoplay loop src="" alt="" id="lightBoxVideo" role="video"></video>
             <h2 id="lightbox-title"></h2>
           </div>
           <!-- <video  autoplay src="" alt="" id="lightBoxVideo"></video> -->
-          <button id="next-media"><i class="fa-solid fa-chevron-right"></i></button>
+          <p id="next-media"><i class="fa-solid fa-chevron-right" aria-hidden="true" title="voir media suivant"></i></p>
         </div>
-        <img src="assets/icons/close.svg" onclick="hideLightBox()"  aria-label="Fermer la fenêtre " id="cross"/>
+        <img src="assets/icons/close.svg" onclick="hideLightBox()" role="icone pour fermer la fenêtre" aria-label="Fermer la fenêtre " id="cross"/>
       </div>
     </div>
-    <div id="likesPriceContainer">
+    <div id="likesPriceContainer" aria-label="nombre de likes et de prix">
       <p id="likeNumber"><span id="likeTotal"></span><i class="fa-solid fa-heart"></i></p>
       <p id="pricePerDay">€/jour</p>
     </div>
