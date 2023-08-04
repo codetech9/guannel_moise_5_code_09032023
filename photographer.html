@@ -15,31 +15,33 @@
     </header>
     <!--main-->
     <main id="main" aria-hidden="false">
-      <div class="photograph-header" role="banner" aria-labelledby="photographer banner">
-        <button class="contact_button" role ="contactbutton" aria-label="contact button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
+      <div class="photograph-header" id="banner">
+        <h2 id="photographer-name" class="title-design"></h2>
+        <button class="contact_button" role="contact_button" aria-label="contact_button" onclick="displayModal()" aria-label="Cliquer sur le bouton afin de contacter le photographe">Contactez-moi</button>
+        <img id="photographer-portrait" src="" alt="">
       </div>
-      <div id="sortForm" role="filter" aria-labell = "selectform" aria-haspopup="true" aria-expanded="false">
+      <div id="sortForm" role="filter" aria-labell="selectform" aria-haspopup="true" aria-expanded="false">
         <p>Trier par</p>
         <div id="dropDown">
-          <a href="#"  id="form-select">
+          <a href="#" id="form-select">
             <span>Popularité</span><i class="fa-solid fa-angle-up"></i>
             <i class="fa-solid fa-angle-down angle-down" style="color: #ffffff;"></i>
           </a>
           <div id="selects">
-            <a href="#" class="selected underlines"  id= "popularite">Popularité</a>
-            <a href="#" class="selected underlines" id ="date">Date</a>
+            <a href="#" class="selected underlines" id="popularite">Popularité</a>
+            <a href="#" class="selected underlines" id="date">Date</a>
             <a href="#" class="selected" id="titre">Titre</a>
           </div>
         </div>
       </div>
-      <div id="media-section" class="articles" role="media contents" aria-label="mediacontents"></div>
+      <div id="media-section" class="articles" role="media-section" aria-label="media section"></div>
     </main>
     <!--contact -->
-    <div id="contact_modal" role="dialog" aria-labelledby="contact-modal" aria-describedby="contactezMoi">
+    <div id="contact_modal" role="dialog" aria-labelledby="contact_modal" aria-describedby="contactus">
 			<div class="modal" id="validated">
 				<header>
           <h2 class="contact" id="contactezMoi">Contactez-moi</h2>
-          <img src="assets/icons/white-close.svg" onclick="closeModal()"  aria-label="Fermer la fenêtre "/>
+          <img src="assets/icons/white-close.svg" onclick="closeModal()"  aria-label="Close the window "/>
         </header>
 				<form id="contactForm">
 					<div id="validated">
@@ -76,9 +78,8 @@
           <div id="media-content">
             <img src="" alt="" id="lightBoxImg" role="img">
             <video autoplay loop src="" alt="" id="lightBoxVideo" role="video"></video>
-            <h2 id="lightbox-title"></h2>
+            <h2 id="lightbox-title" aria-labelledby="lightbox-title"></h2>
           </div>
-          <!-- <video  autoplay src="" alt="" id="lightBoxVideo"></video> -->
           <p id="next-media"><i class="fa-solid fa-chevron-right" aria-hidden="true" title="voir media suivant"></i></p>
         </div>
         <img src="assets/icons/close.svg" onclick="hideLightBox()" role="icone pour fermer la fenêtre" aria-label="Fermer la fenêtre " id="cross"/>
@@ -88,8 +89,13 @@
       <p id="likeNumber"><span id="likeTotal"></span><i class="fa-solid fa-heart"></i></p>
       <p id="pricePerDay">€/jour</p>
     </div>
-    <script src="./scripts/pages/photographer.js"></script>
-    <script src="scripts/factories/media.js"></script>
+    <script src="scripts/models/Photographer.js"></script>
+    <script src="scripts/models/Media.js"></script>
+    <script src="scripts/factories/Photographer.factory.js"></script>
+    <script src="scripts/factories/Media.factory.js"></script>
     <script src="scripts/utils/contactForm.js"></script>
+    <script src="scripts/factories/photographer.js"></script>
+    <script src="scripts/factories/media.js"></script>
+    <script src="scripts/pages/photographer.js"></script>
   </body>
 </html>
