@@ -13,7 +13,7 @@ function photographerFactory(data) {
 
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture);
-        img.setAttribute("alt", picture);
+        img.setAttribute("alt", portrait);
         img.style.borderRadius = "50%";
 
         // Name

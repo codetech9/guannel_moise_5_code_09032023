@@ -118,6 +118,23 @@ function hideLightBox(){
   document.querySelector("#lightbox-container").style.display = "none";
 }
 
+
+// Get the modal element
+function escModalClose() {
+  const modal = document.getElementById("lightbox-container");
+  // Listen for keydown event on the document
+  document.addEventListener("keydown", function(event) {
+    // Check if the pressed key is the "Esc" key
+    if (event.key === "Escape") {
+      // Close the modal
+      modal.style.display = "none";
+      modal.attr('aria-hidden', 'true');
+      resetForm();
+    }
+  });
+}
+
+
 function previousMedia(mediaList, photographerName, event){
   if (event.keyCode === 37) {
     // Code pour gérer l'appui sur la flèche directionnelle gauche ici
@@ -166,9 +183,7 @@ function nextMedia(mediaList, photographerName, event){
     }
     lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title;
   }
-
 }
-
 
 function setupLighboxNextButton(mediaList, photographerName){
   const nextMediaArrow = document.getElementById("next-media");
@@ -177,6 +192,8 @@ function setupLighboxNextButton(mediaList, photographerName){
   nextMediaArrow.addEventListener("click", () => nextMedia(mediaList, photographerName))
   document.addEventListener("keydown", () => nextMedia(mediaList, photographerName, event))
 }
+
+
 
 function mediaListSortForm() {
   const formSelect = document.getElementById("form-select");
@@ -254,5 +271,6 @@ async function init() {
   hideLightBox()
   mediaListSortForm()
   sortMedialistOrder(mediaList, photographer)
+  escModalClose();
 }
 init()
