@@ -12,7 +12,7 @@ async function getPhotographer(id) {
   const response = await fetch("data/photographers.json")
   const data = await response.json();
   const photographer = data.photographers.find(p => p.id == id);
-  return new Photographer(photographer);
+  return new Photographer(photographer.name, photographer.city,  photographer.country, photographer.tagline, photographer.price, photographer.portrait);
 }
 
 async function displayPhotographer(photographer) {
@@ -27,8 +27,9 @@ async function  getMediaList(id) {
   const mediaList = data.media.filter(m => m.photographerId == id)
   let medias = []
   for(let i = 0; i <  mediaList.length; i++){
-    medias.push(new Media(mediaList[i].title, mediaList[i].image, mediaList[i].video, mediaList[i].likes, mediaList[i].date, mediaList[i].price))
+    medias.push(new MediaFactory(mediaList[i].title, mediaList[i].image, mediaList[i].video, mediaList[i].likes, mediaList[i].date, mediaList[i].price))
   }
+
   return medias
 }
 
@@ -38,12 +39,14 @@ async function displayMediaList(photographer, mediaList){
     mediaCard.classList.add("card-container")
     const img = document.createElement("img")
     const photographerVideo = document.createElement("video")
+
     if(!media.image){
       photographerVideo.setAttribute("src", `/assets/sample/${photographer.name.split(' ')[0]}/${media.video}`);
       photographerVideo.classList.add("cardphotographerVideo");
       photographerVideo.autoplay = true;
       photographerVideo.loop = true;
       photographerVideo.classList.add("cardVideo")
+      photographerVideo.setAttribute("tabindex", "0")
       photographerVideo.addEventListener("click", () => {
         // index actuel
         index = i
@@ -55,6 +58,7 @@ async function displayMediaList(photographer, mediaList){
       img.setAttribute("src", `/assets/sample/${photographer.name.split(' ')[0]}/${media.image}`)
       img.setAttribute("alt", media.image)
       img.classList.add("cardImg");
+      img.setAttribute("tabindex", "0")
       img.addEventListener("click", () => {
       // index actuel
       index = i
@@ -71,7 +75,8 @@ async function displayMediaList(photographer, mediaList){
 
     // hearticone
     let heart = document.createElement("p");
-    heart.innerHTML = `<i class="fa-solid fa-heart "></i>`;
+    heart.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+    heart.style.marginLeft = "5px";
 
     // likes
     let likes = document.createElement("p");
@@ -91,11 +96,13 @@ async function displayMediaList(photographer, mediaList){
         heart.classList.add("liked");
         likes.innerHTML = likeCount;
         likeTotal.innerHTML= parseInt(likeTotal.textContent) + 1;
+        heart.innerHTML = `<i class="fa-solid fa-heart "></i>`
       }else {
         likeCount--
         heart.classList.remove("liked");
         likes.innerHTML = likeCount;
         likeTotal.innerHTML = parseInt(likeTotal.textContent) - 1;
+        heart.innerHTML = `<i class="fa-regular fa-heart"></i>`;
       }
     })
 
@@ -104,9 +111,12 @@ async function displayMediaList(photographer, mediaList){
     mediaCard.appendChild(mediaDescription)
     mediaSection.appendChild(mediaCard)
   });
+}
 
+function displayPhotographerPrice(photographer){
   const priceperday = document.querySelector("#pricePerDay");
-  priceperday.prepend(photographer.price);
+    priceperday.prepend(photographer.price);
+    console.log(photographer.price)
 }
 
 
@@ -128,7 +138,7 @@ function escModalClose() {
     if (event.key === "Escape") {
       // Close the modal
       modal.style.display = "none";
-      modal.attr('aria-hidden', 'true');
+      modal.setAttribute('aria-hidden', 'true');
       resetForm();
     }
   });
@@ -136,8 +146,28 @@ function escModalClose() {
 
 
 function previousMedia(mediaList, photographerName, event){
-  if (event.keyCode === 37) {
-    // Code pour gérer l'appui sur la flèche directionnelle gauche ici
+    if (event.keyCode === 37) {
+      index--;
+      if (index < 0) {
+        index = mediaList.length -1;
+      }
+      if(mediaList[index].image) {
+        lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+        lightBoxImg.style.display = "flex";
+        lightBoxVideo.style.display = "none";
+      }else {
+        lightBoxVideo.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].video}`);
+        lightBoxVideo.style.display = "block";
+        lightBoxImg.style.display = "none";
+      }
+      lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title
+    }
+}
+
+
+function clickPreviousMedia(mediaList, photographerName) {
+  const previousMedia = document.getElementById("previous-media")
+  previousMedia.addEventListener("click", function(){
     index--;
     if (index < 0) {
       index = mediaList.length -1;
@@ -151,8 +181,8 @@ function previousMedia(mediaList, photographerName, event){
       lightBoxVideo.style.display = "block";
       lightBoxImg.style.display = "none";
     }
-    lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title
-  }
+  })
+  lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title
 }
 
 // // récupérer le tableau d'image, index de l'image actuelle, tabImg[index], tabImg[index +1]
@@ -161,13 +191,13 @@ function setupLighboxPreviousButton(mediaList, photographerName){
   const previousMediaArrow = document.getElementById("previous-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
   lightBoxVideo = document.querySelector("#lightBoxVideo");
-  previousMediaArrow.addEventListener("click",() => previousMedia(mediaList, photographerName))
+  previousMediaArrow.addEventListener("keydown",() => previousMedia(mediaList, photographerName))
+  previousMediaArrow.addEventListener("click", () => clickPreviousMedia(mediaList, photographerName))
   document.addEventListener("keydown", () => previousMedia(mediaList, photographerName, event))
 }
 
 function nextMedia(mediaList, photographerName, event){
   if (event.keyCode === 39) {
-    // Code pour gérer l'appui sur la flèche directionnelle droite ici
     index++;
     if( index >= mediaList.length ){
       index = 0;
@@ -185,11 +215,29 @@ function nextMedia(mediaList, photographerName, event){
   }
 }
 
+function clickNextMedia(mediaList, photographerName) {
+  index++;
+  if( index >= mediaList.length ){
+    index = 0;
+  }
+  if(mediaList[index].image) {
+    lightBoxImg.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].image}`);
+    lightBoxImg.style.display = "flex";
+    lightBoxVideo.style.display = "none";
+  }else {
+    lightBoxVideo.setAttribute( "src", `assets/sample/${photographerName.split(' ')[0]}/${mediaList[index].video}`);
+    lightBoxImg.style.display = "none";
+    lightBoxVideo.style.display = "block";
+  }
+  lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title;
+}
+
 function setupLighboxNextButton(mediaList, photographerName){
   const nextMediaArrow = document.getElementById("next-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
   lightBoxVideo = document.querySelector("#lightBoxVideo");
-  nextMediaArrow.addEventListener("click", () => nextMedia(mediaList, photographerName))
+  nextMediaArrow.addEventListener("keydown", () => nextMedia(mediaList, photographerName))
+  nextMediaArrow.addEventListener("click", () => clickNextMedia(mediaList, photographerName))
   document.addEventListener("keydown", () => nextMedia(mediaList, photographerName, event))
 }
 
@@ -215,33 +263,42 @@ function mediaListSortForm() {
 }
 
 function sortMedialistOrder(mediaList, photographer) {
-
+  const popularites = document.getElementById("popularites")
   const popularite = document.getElementById("popularite");
   const date = document.getElementById("date");
   const titre = document.getElementById("titre");
   const mediaSection = document.getElementById("media-section");
 
   popularite.addEventListener("click", function(){
+    const selects = document.getElementById("selects");
+    selects.style.display = "none";
     mediaList.sort((a, b) => b.likes - a.likes)
-    mediaSection.innerHTML = mediaList;
+    mediaSection.innerHTML = "";
+    popularites.innerHTML = "Popularité"
     displayMediaList( photographer, mediaList)
     console.log("populaire");
-      })
+  })
 
   titre.addEventListener("click", function(){
-      mediaList.sort((a, b) => a.title.localeCompare(b.title));
-      mediaSection.innerHTML = mediaList;
-      displayMediaList( photographer, mediaList)
-      console.log("titre");
+    const selects = document.getElementById("selects");
+    selects.style.display = "none";
+    mediaList.sort((a, b) => a.title.localeCompare(b.title));
+    mediaSection.innerHTML = "";
+    popularites.innerHTML = "Titre"
+    displayMediaList( photographer, mediaList)
+    console.log("titre");
   })
 
   date.addEventListener("click", function(){
-      mediaList.sort((a, b) => new Date(b.date) - new Date(a.date));
-      mediaSection.innerHTML = mediaList;
-      displayMediaList(photographer, mediaList)
-      console.log("date");
+    const selects = document.getElementById("selects");
+    selects.style.display = "none";
+    mediaList.sort((a, b) => new Date(b.date) - new Date(a.date));
+    mediaSection.innerHTML = "";
+    popularites.innerHTML = "Date"
+    displayMediaList(photographer, mediaList)
+    console.log("date");
   })
-  }
+}
 
 // Fonction permettant de connaitre le nombre total de like
 function calculateLikesSum(mediaList, sum, likeTotal) {
@@ -264,9 +321,12 @@ async function init() {
   displayPhotographer(photographer)
   const mediaList = await getMediaList(id)
   displayMediaList(photographer, mediaList)
+  displayPhotographerPrice(photographer)
   calculateLikesSum(mediaList);
   setupLighboxPreviousButton(mediaList, photographer.name);
   setupLighboxNextButton(mediaList, photographer.name);
+  clickPreviousMedia(mediaList, photographer.name)
+  clickNextMedia(mediaList, photographer.name)
   showLightBox()
   hideLightBox()
   mediaListSortForm()

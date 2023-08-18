@@ -1,20 +1,15 @@
 function displayModal() {
   const modal = document.getElementById("contact_modal");
-  const body = document.querySelector("body");
 	modal.style.display = "block";
-  modal.attr('aria-hidden', 'false');
-  body.style.overflow = "hidden";
+  modal.setAttribute('aria-hidden', 'false')
+  modal.querySelector('input').focus();
 }
 
 function closeModal() {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
-    modal.attr('aria-hidden', 'true');
+    modal.setAttribute('aria-hidden', 'true');
     modal.focus();
-    // let first = document.getElementById('first').value;
-    // let last = document.getElementById('last').value;
-    // let email = document.getElementById('email').value;
-    // let message = document.getElementById("message").value;
     first.value = "";
     last.value = "";
     email.value = "";
@@ -23,12 +18,6 @@ function closeModal() {
     errorLast.textContent = "";
     errorMail.textContent = "";
 }
-
-
-
-// REGEX
-// const regName = /^[A-Za-z]{2}/;
-// const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 // DOM Errors
 const errorFirst = document.getElementById("errorFirst");
@@ -161,7 +150,7 @@ function escClose() {
     if (event.key === "Escape") {
       // Close the modal
       modal.style.display = "none";
-      modal.attr('aria-hidden', 'true');
+      modal.setAttribute('aria-hidden', 'true');
       resetForm();
     }
   });

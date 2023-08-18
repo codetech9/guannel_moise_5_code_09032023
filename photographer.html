@@ -3,8 +3,8 @@
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <script src="https://kit.fontawesome.com/85946ce982.js" crossorigin="anonymous"></script>
     <title>Fisheye - photographe </title>
   </head>
@@ -24,7 +24,7 @@
         <p>Trier par</p>
         <div id="dropDown">
           <a href="#" id="form-select">
-            <span>Popularité</span><i class="fa-solid fa-angle-up"></i>
+            <span id="popularites">Popularité</span><i class="fa-solid fa-angle-up"></i>
             <i class="fa-solid fa-angle-down angle-down" style="color: #ffffff;"></i>
           </a>
           <div id="selects">
@@ -90,12 +90,11 @@
       <p id="pricePerDay">€/jour</p>
     </div>
     <script src="scripts/models/Photographer.js"></script>
-    <script src="scripts/models/Media.js"></script>
     <script src="scripts/factories/Photographer.factory.js"></script>
     <script src="scripts/factories/Media.factory.js"></script>
     <script src="scripts/utils/contactForm.js"></script>
-    <script src="scripts/factories/photographer.js"></script>
-    <script src="scripts/factories/media.js"></script>
     <script src="scripts/pages/photographer.js"></script>
+    <script src="scripts/models/MediaImage.js"></script>
+    <script src="scripts/models/MediaVideo.js"></script>
   </body>
 </html>
