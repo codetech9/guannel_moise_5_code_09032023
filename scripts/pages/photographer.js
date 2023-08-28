@@ -18,6 +18,8 @@ async function getPhotographer(id) {
 async function displayPhotographer(photographer) {
   document.getElementById("photographer-name").innerHTML = photographer.name
   document.getElementById("photographer-name").setAttribute("alt", photographer.name)
+  document.getElementById("photographer-location").innerHTML = photographer.city +","+ photographer.country
+  document.getElementById("photographer-tagline").innerHTML = photographer.tagline
   document.getElementById("photographer-portrait").setAttribute("src", photographer.portrait)
 }
 
@@ -46,7 +48,7 @@ async function displayMediaList(photographer, mediaList){
       photographerVideo.autoplay = true;
       photographerVideo.loop = true;
       photographerVideo.classList.add("cardVideo")
-      photographerVideo.setAttribute("tabindex", "0")
+      photographerVideo.setAttribute("data-tabindex", "0")
       photographerVideo.addEventListener("click", () => {
         // index actuel
         index = i
@@ -58,7 +60,7 @@ async function displayMediaList(photographer, mediaList){
       img.setAttribute("src", `/assets/sample/${photographer.name.split(' ')[0]}/${media.image}`)
       img.setAttribute("alt", media.image)
       img.classList.add("cardImg");
-      img.setAttribute("tabindex", "0")
+      img.setAttribute("data-tabindex", "0")
       img.addEventListener("click", () => {
       // index actuel
       index = i
@@ -116,7 +118,6 @@ async function displayMediaList(photographer, mediaList){
 function displayPhotographerPrice(photographer){
   const priceperday = document.querySelector("#pricePerDay");
     priceperday.prepend(photographer.price);
-    console.log(photographer.price)
 }
 
 

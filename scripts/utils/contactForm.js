@@ -2,7 +2,12 @@ function displayModal() {
   const modal = document.getElementById("contact_modal");
 	modal.style.display = "block";
   modal.setAttribute('aria-hidden', 'false')
-  modal.querySelector('input').focus();
+  let tabElements = document.querySelectorAll("[data-tabindex]")
+  tabElements.forEach(tabElement => tabElement.setAttribute('tabindex', '-1'))
+
+  let tabIndexElements = document.querySelectorAll("[tabindex]")
+  tabIndexElements.forEach(tabElement => tabElement.setAttribute('tabindex', '-1'))
+  console.log(tabIndexElements)
 }
 
 function closeModal() {
@@ -17,6 +22,11 @@ function closeModal() {
     errorFirst.textContent = "";
     errorLast.textContent = "";
     errorMail.textContent = "";
+    let tabElements = document.querySelectorAll("[data-tabindex]")
+    tabElements.forEach(tabElement => tabElement.setAttribute('tabindex', '0'))
+
+    let tabIndexElements = document.querySelectorAll("[tabindex]")
+    tabIndexElements.forEach(tabElement => tabElement.setAttribute('tabindex', '0'))
 }
 
 // DOM Errors
@@ -152,6 +162,10 @@ function escClose() {
       modal.style.display = "none";
       modal.setAttribute('aria-hidden', 'true');
       resetForm();
+      let tabElements = document.querySelectorAll("[data-tabindex]")
+      tabElements.forEach(tabElement => tabElement.setAttribute('tabindex', '0'))
+      let tabIndexElements = document.querySelectorAll("[tabindex]")
+      tabIndexElements.forEach(tabElement => tabElement.setAttribute('tabindex', '0'))
     }
   });
 }
