@@ -1,8 +1,8 @@
-function displayModal() {
+const displayModal = ()  => {
   const modal = document.getElementById("contact_modal");
 	modal.style.display = "block";
   modal.setAttribute('aria-hidden', 'false')
-  let tabElements = document.querySelectorAll("[data-tabindex]")
+  let tabElements = document.querySelectorAll("[tabindex]")
   tabElements.forEach(tabElement => tabElement.setAttribute('tabindex', '-1'))
 
   let tabIndexElements = document.querySelectorAll("[tabindex]")
@@ -10,7 +10,7 @@ function displayModal() {
   console.log(tabIndexElements)
 }
 
-function closeModal() {
+const closeModal = () => {
     const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
     modal.setAttribute('aria-hidden', 'true');
@@ -22,7 +22,7 @@ function closeModal() {
     errorFirst.textContent = "";
     errorLast.textContent = "";
     errorMail.textContent = "";
-    let tabElements = document.querySelectorAll("[data-tabindex]")
+    let tabElements = document.querySelectorAll("[tabindex]")
     tabElements.forEach(tabElement => tabElement.setAttribute('tabindex', '0'))
 
     let tabIndexElements = document.querySelectorAll("[tabindex]")
@@ -35,7 +35,7 @@ const errorLast = document.getElementById("errorLast");
 const errorMail = document.getElementById("errorMail");
 
 // function Firstname
-function isFirstNameValid(first, regName) {
+const isFirstNameValid = (first, regName) => {
   regName = /^[A-Za-z]{2}/;
   if(!regName.test(first)){
       console.log(first);
@@ -51,7 +51,7 @@ function isFirstNameValid(first, regName) {
 }
 
 // function Lastname
-function isLastNameValid(last, regName) {
+const isLastNameValid = (last, regName) => {
   regName = /^[A-Za-z]{2}/;
   last = document.getElementById("last").value;
   if(!regName.test(last)){
@@ -69,7 +69,7 @@ function isLastNameValid(last, regName) {
 }
 
 // function Email
-function isEmailValid(email, regEmail){
+const isEmailValid = (email, regEmail) => {
   regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   email = document.getElementById("email").value;
   if(regEmail.test(email)){
@@ -103,7 +103,7 @@ form.onsubmit = (event) =>{
 
 
 //validate
-function validate (){
+const validate = () => {
   // input values
   const first = document.getElementById('first').value;
   const last = document.getElementById('last').value;
@@ -137,7 +137,7 @@ function validate (){
 
 
 // Clear form
-function resetForm() {
+const  resetForm = () => {
   // input values
   const first = document.getElementById('first');
   first.value = "";
@@ -152,7 +152,7 @@ function resetForm() {
 // Close modal  while ESC key is press
 
 // Get the modal element
-function escClose() {
+const escClose = () => {
   const modal = document.getElementById("contact_modal");
   // Listen for keydown event on the document
   document.addEventListener("keydown", function(event) {

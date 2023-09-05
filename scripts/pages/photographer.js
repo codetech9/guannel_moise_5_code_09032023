@@ -2,20 +2,22 @@
 let index = 0
 
 // on récupère l'id du photographe
-function getPhotographerId() {
+const getPhotographerId = () => {
   const parameters = new URLSearchParams(window.location.search);
   return parseInt(parameters.get("id"));
 }
 
 //Mettre le code JavaScript lié à la page photographer.html
-async function getPhotographer(id) {
+const getPhotographer = async (id) => {
   const response = await fetch("data/photographers.json")
   const data = await response.json();
   const photographer = data.photographers.find(p => p.id == id);
   return new Photographer(photographer.name, photographer.city,  photographer.country, photographer.tagline, photographer.price, photographer.portrait);
 }
 
-async function displayPhotographer(photographer) {
+
+
+const displayPhotographer = async (photographer) => {
   document.getElementById("photographer-name").innerHTML = photographer.name
   document.getElementById("photographer-name").setAttribute("alt", photographer.name)
   document.getElementById("photographer-location").innerHTML = photographer.city +","+ photographer.country
@@ -23,7 +25,7 @@ async function displayPhotographer(photographer) {
   document.getElementById("photographer-portrait").setAttribute("src", photographer.portrait)
 }
 
-async function  getMediaList(id) {
+const getMediaList = async (id) => {
   const response = await fetch("data/photographers.json")
   const data = await response.json();
   const mediaList = data.media.filter(m => m.photographerId == id)
@@ -35,7 +37,7 @@ async function  getMediaList(id) {
   return medias
 }
 
-async function displayMediaList(photographer, mediaList){
+const displayMediaList = async(photographer, mediaList) => {
   mediaList.forEach((media, i) => {
     let mediaCard = document.createElement("div");
     mediaCard.classList.add("card-container")
@@ -48,7 +50,7 @@ async function displayMediaList(photographer, mediaList){
       photographerVideo.autoplay = true;
       photographerVideo.loop = true;
       photographerVideo.classList.add("cardVideo")
-      photographerVideo.setAttribute("data-tabindex", "0")
+      photographerVideo.setAttribute("tabindex", "0")
       photographerVideo.addEventListener("click", () => {
         // index actuel
         index = i
@@ -60,7 +62,7 @@ async function displayMediaList(photographer, mediaList){
       img.setAttribute("src", `/assets/sample/${photographer.name.split(' ')[0]}/${media.image}`)
       img.setAttribute("alt", media.image)
       img.classList.add("cardImg");
-      img.setAttribute("data-tabindex", "0")
+      img.setAttribute("tabindex", "0")
       img.addEventListener("click", () => {
       // index actuel
       index = i
@@ -77,7 +79,7 @@ async function displayMediaList(photographer, mediaList){
 
     // hearticone
     let heart = document.createElement("p");
-    heart.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+    heart.innerHTML = `<em class="fa-regular fa-heart"></em>`;
     heart.style.marginLeft = "5px";
 
     // likes
@@ -98,13 +100,13 @@ async function displayMediaList(photographer, mediaList){
         heart.classList.add("liked");
         likes.innerHTML = likeCount;
         likeTotal.innerHTML= parseInt(likeTotal.textContent) + 1;
-        heart.innerHTML = `<i class="fa-solid fa-heart "></i>`
+        heart.innerHTML = `<em class="fa-solid fa-heart "></em>`
       }else {
         likeCount--
         heart.classList.remove("liked");
         likes.innerHTML = likeCount;
         likeTotal.innerHTML = parseInt(likeTotal.textContent) - 1;
-        heart.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        heart.innerHTML = `<em class="fa-regular fa-heart"></em>`;
       }
     })
 
@@ -115,23 +117,23 @@ async function displayMediaList(photographer, mediaList){
   });
 }
 
-function displayPhotographerPrice(photographer){
+const displayPhotographerPrice = async (photographer) => {
   const priceperday = document.querySelector("#pricePerDay");
     priceperday.prepend(photographer.price);
 }
 
 
-function showLightBox(){
+const showLightBox = () =>{
   document.querySelector("#lightbox-container").style.display = "block";
 }
 
-function hideLightBox(){
+const hideLightBox= () =>{
   document.querySelector("#lightbox-container").style.display = "none";
 }
 
 
 // Get the modal element
-function escModalClose() {
+const escModalClose = () => {
   const modal = document.getElementById("lightbox-container");
   // Listen for keydown event on the document
   document.addEventListener("keydown", function(event) {
@@ -146,7 +148,7 @@ function escModalClose() {
 }
 
 
-function previousMedia(mediaList, photographerName, event){
+const previousMedia = (mediaList, photographerName, event) => {
     if (event.keyCode === 37) {
       index--;
       if (index < 0) {
@@ -166,7 +168,7 @@ function previousMedia(mediaList, photographerName, event){
 }
 
 
-function clickPreviousMedia(mediaList, photographerName) {
+const clickPreviousMedia = (mediaList, photographerName) =>{
   const previousMedia = document.getElementById("previous-media")
   previousMedia.addEventListener("click", function(){
     index--;
@@ -187,7 +189,7 @@ function clickPreviousMedia(mediaList, photographerName) {
 }
 
 // // récupérer le tableau d'image, index de l'image actuelle, tabImg[index], tabImg[index +1]
-function setupLighboxPreviousButton(mediaList, photographerName){
+const setupLighboxPreviousButton = (mediaList, photographerName) => {
 
   const previousMediaArrow = document.getElementById("previous-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
@@ -197,7 +199,7 @@ function setupLighboxPreviousButton(mediaList, photographerName){
   document.addEventListener("keydown", () => previousMedia(mediaList, photographerName, event))
 }
 
-function nextMedia(mediaList, photographerName, event){
+const nextMedia = (mediaList, photographerName, event) => {
   if (event.keyCode === 39) {
     index++;
     if( index >= mediaList.length ){
@@ -216,7 +218,7 @@ function nextMedia(mediaList, photographerName, event){
   }
 }
 
-function clickNextMedia(mediaList, photographerName) {
+const  clickNextMedia = (mediaList, photographerName) => {
   index++;
   if( index >= mediaList.length ){
     index = 0;
@@ -233,7 +235,7 @@ function clickNextMedia(mediaList, photographerName) {
   lightBoxTitle = document.querySelector('#lightbox-title').innerHTML = mediaList[index].title;
 }
 
-function setupLighboxNextButton(mediaList, photographerName){
+const setupLighboxNextButton = (mediaList, photographerName) => {
   const nextMediaArrow = document.getElementById("next-media");
   lightBoxImg = document.querySelector("#lightBoxImg");
   lightBoxVideo = document.querySelector("#lightBoxVideo");
@@ -244,7 +246,7 @@ function setupLighboxNextButton(mediaList, photographerName){
 
 
 
-function mediaListSortForm() {
+const mediaListSortForm = () => {
   const formSelect = document.getElementById("form-select");
   const selects = document.getElementById("selects");
   const angleDown = document.querySelector(".fa-angle-down");
@@ -263,7 +265,7 @@ function mediaListSortForm() {
   })
 }
 
-function sortMedialistOrder(mediaList, photographer) {
+const sortMedialistOrder = (mediaList, photographer) => {
   const popularites = document.getElementById("popularites")
   const popularite = document.getElementById("popularite");
   const date = document.getElementById("date");
@@ -302,7 +304,7 @@ function sortMedialistOrder(mediaList, photographer) {
 }
 
 // Fonction permettant de connaitre le nombre total de like
-function calculateLikesSum(mediaList, sum, likeTotal) {
+const calculateLikesSum = (mediaList, sum, likeTotal) => {
   likeTotal = document.querySelector("#likeTotal");
   sum = 0
   for(i = 0; i < mediaList.length; i++){
@@ -312,11 +314,11 @@ function calculateLikesSum(mediaList, sum, likeTotal) {
   likeTotal.prepend(sum);
 }
 
-function hasLiked(heart){
+const hasLiked = (heart) => {
   return heart.classList.contains('liked');
 }
 
-async function init() {
+const init = async () => {
   const id = getPhotographerId()
   const photographer = await getPhotographer(id)
   displayPhotographer(photographer)
@@ -334,4 +336,5 @@ async function init() {
   sortMedialistOrder(mediaList, photographer)
   escModalClose();
 }
+
 init()
